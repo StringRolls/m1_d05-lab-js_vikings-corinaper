@@ -20,11 +20,11 @@ class Viking extends Soldier {
     
   }
   receiveDamage(damage){
-    this.health = this.attack() - damage
+    this.health = this.health - damage
     if (this.health>0){
-      return `${this.name} has received ${damage} points of damage"`
+      console.log(`${this.name} has received ${damage} points of damage`)
     } else {
-      return `${this.name} has died in act of combat"`
+      console.log(`${this.name} has died in act of combat`)
     }
    }
   battleCry(){
@@ -40,9 +40,9 @@ class Saxon extends Soldier {
   receiveDamage(damage){
     this.health = this.health - damage;
     if (this.health>0){
-      return `A Saxon has received ${damage} points of damage`
+      console.log(`A Saxon has received ${damage} points of damage`)
     } else {
-      return `A Saxon has died in combat`
+      console.log(`A Saxon has died in combat`)
     }
   }
 }
@@ -61,24 +61,20 @@ class War {
     let randomNumber1 = Math.floor(Math.random()*this.saxonArmy.length);
     let randomNumber2 = Math.floor(Math.random()*this.vikingArmy.length);
     let saxonDamageResult = this.saxonArmy[randomNumber1].receiveDamage(this.vikingArmy[randomNumber2].strength);
-    this.saxonArmy.forEach(saxon=>{
-      if (saxon.health<1){
-        this.saxonArmy.splice(this.saxonArmy.indexOf(saxon),1)
+      if (this.saxonArmy[randomNumber1].health<1){
+        this.saxonArmy.splice(randomNumber1,1)
       }
-    });
-    return `${saxonDamageResult}, strength of Viking ${this.vikingArmy[randomNumber2].name} ${this.vikingArmy[randomNumber2].strength} `
+    return `${saxonDamageResult}`
   };
 
   saxonAttack(){
   let randomNumber1 = Math.floor(Math.random()*this.vikingArmy.length);
   let randomNumber2 = Math.floor(Math.random()*this.saxonArmy.length);
   let vikingDamageResult = this.vikingArmy[randomNumber1].receiveDamage(this.saxonArmy[randomNumber2].strength);
-  this.vikingArmy.forEach(viking=>{
-    if (viking.health<1){
-      this.vikingArmy.splice(this.vikingArmy.indexOf(saxon),1)
-    }
-  });
-  return `${vikingDamageResult}, strength of Saxon ${this.saxonArmy[randomNumber2].strength} `
+    if (this.vikingArmy[randomNumber1].health<1){
+      this.vikingArmy.splice(randomNumber1,1)
+  };
+  return `${vikingDamageResult}`
 }
 };
 const viking = new Viking("Odin", 400, 400)
